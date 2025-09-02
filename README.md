@@ -49,11 +49,11 @@ In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=
 ```
 pnpm install
 ```
-Compile and Hot-Reload for Development
+### Compile and Hot-Reload for Development
 ```
 pnpm dev
 ```
-Type-Check, Compile and Minify for Production
+### Type-Check, Compile and Minify for Production
 ```
 pnpm build
 ```
