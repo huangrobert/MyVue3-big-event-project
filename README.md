@@ -18,7 +18,6 @@ In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=
 ---
 
 ## 📂 Project Structure
-
 ├── api/ # 接口请求封装
 ├── assets/ # 静态资源
 ├── components/ # 公共组件
@@ -28,8 +27,7 @@ In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=
 ├── utils/ # 工具函数
 ├── views/ # 页面视图
 ├── App.vue # 根组件
-└── main.ts # 项目入口
-
+└── main.ts # 项目入口  
 ---
 
 ## ✨ Features
