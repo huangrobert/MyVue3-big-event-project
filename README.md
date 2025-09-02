@@ -29,6 +29,7 @@ In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=
 ├── views/ # 页面视图
 ├── App.vue # 根组件
 └── main.ts # 项目入口
+
 ---
 
 ## ✨ Features
