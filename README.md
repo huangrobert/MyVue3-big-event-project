@@ -18,7 +18,7 @@ In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=
 ---
 
 ## 📂 Project Structure
-
+```
 ├── api/ # 接口请求封装
 ├── assets/ # 静态资源
 ├── components/ # 公共组件
