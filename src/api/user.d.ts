@@ -23,4 +23,16 @@ declare module '@/api/user' {
   export function userGetInfoService(): Promise<
     AxiosResponse<ApiResponse<UserInfo>>
   >
+  export function userUpdateInfoService(data: {
+    nickname: string
+    email: string
+    id: number
+  }): Promise<unknown>
+
+  export function userUpdateAvatarService(avatar: string): Promise<unknown>
+  export function userUpdatePasswordService(data: {
+    old_pwd: string
+    new_pwd: string
+    re_pwd: string
+  }): Promise<unknown>
 }

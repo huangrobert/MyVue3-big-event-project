@@ -2,8 +2,10 @@
 import { ref } from 'vue'
 import { Delete, Edit } from '@element-plus/icons-vue'
 import ChannelSelect from './components/ChannelSelect.vue'
-// import { artGetListService } from '@/api/article'
+import { artGetListService } from '@/api/article'
 import { formatTime } from '@/utils/format'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import ArticleEdit from './components/ArticleEdit.vue'
 //原数据
 const articleList = ref([
   {
@@ -63,17 +65,11 @@ const articleList = ref([
     cate_name: '二次元'
   }
 ])
+const loading = ref(false)
 //模拟数据
-const articleListAll = ref([...articleList.value])
+// const articleListAll = ref([...articleList.value])
 const total = ref(8)
-const onEditArticle = (row) => {
-  // eslint-disable-next-line no-undef
-  console.log(row)
-}
-const onDelArticle = (row) => {
-  // eslint-disable-next-line no-undef
-  console.log(row)
-}
+
 const params = ref({
   pagenum: 1,
   pagesize: 5,
@@ -81,17 +77,19 @@ const params = ref({
   state: ''
 })
 const getArticleList = async () => {
+  loading.value = true
   //原动态写法
-  // const res = await artGetListService(params.value)
-  // // @ts-expect-error for test
-  // articleList.value = res.data.data
-  // // @ts-expect-error for test
-  // total.value = res.data.total
+  const res = await artGetListService(params.value)
+  // @ts-expect-error for test
+  articleList.value = res.data.data
+  // @ts-expect-error for test
+  total.value = res.data.total
   //静态写法
-  const start = (params.value.pagenum - 1) * params.value.pagesize
-  const end = start + params.value.pagesize
-  articleList.value = articleListAll.value.slice(start, end)
-  total.value = articleListAll.value.length
+  // const start = (params.value.pagenum - 1) * params.value.pagesize
+  // const end = start + params.value.pagesize
+  // articleList.value = articleListAll.value.slice(start, end)
+  // total.value = articleListAll.value.length
+  // loading.value = false
 }
 getArticleList()
 const onSizeChange = (size) => {
@@ -107,29 +105,67 @@ const onCurrentChange = (page) => {
   params.value.pagenum = page
   getArticleList()
 }
+
+const onAddArticle = () => {
+  articleEdit.value.open({})
+}
+
+const onEditArticle = (row) => {
+  // eslint-disable-next-line no-undef
+  console.log(row)
+  articleEdit.value.open({ row })
+}
+const onDelArticle = (row) => {
+  // eslint-disable-next-line no-undef
+  console.log(row)
+}
+
+const onSearch = () => {
+  params.value.pagenum = 1
+  getArticleList()
+}
+const onReset = () => {
+  params.value.pagenum = 1
+  params.value.pagesize = 5
+  params.value.cate_id = ''
+  params.value.state = ''
+  getArticleList()
+}
+const articleEdit = ref()
+
+const onSuccess = (type) => {
+  if (type === 'add') {
+    const lastPage = Math.ceil((total.value + 1) / params.value.pagesize)
+    params.value.pagenum = lastPage
+  }
+  getArticleList()
+}
 </script>
 
 <template>
   <page-container title="文章管理">
     <template #extra>
-      <el-button>添加文章</el-button>
+      <el-button type="primary" @click="onAddArticle">添加文章</el-button>
     </template>
     <el-form inline>
       <el-form-item label="文章分类：">
-        <channel-select v-model="params.cate_id"></channel-select>
+        <channel-select
+          v-model="params.cate_id"
+          style="width: 240px"
+        ></channel-select>
       </el-form-item>
       <el-form-item label="发布状态：">
         <el-select style="width: 240px" v-model="params.state">
-          <el-option label="已发布" value="已发布"></el-option>
+          <el-option label="已发布" value="已发布" width="240px"></el-option>
           <el-option label="草稿" value="草稿"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">搜索</el-button>
-        <el-button>重置</el-button>
+        <el-button type="primary" @click="onSearch">搜索</el-button>
+        <el-button @click="onReset">重置</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="articleList" style="width: 100%">
+    <el-table :data="articleList" style="width: 100%" v-loading="loading">
       <el-table-column label="文章标题" prop="title" width="400">
         <template #default="{ row }">
           <el-link type="primary" :underline="false">{{ row.title }}</el-link>
@@ -172,6 +208,7 @@ const onCurrentChange = (page) => {
       @current-change="onCurrentChange"
       style="margin-top: 20px; justify-content: flex-end"
     />
+    <article-edit ref="articleEdit" @success="onSuccess" />
   </page-container>
 </template>
 <style lang="scss" scoped></style>

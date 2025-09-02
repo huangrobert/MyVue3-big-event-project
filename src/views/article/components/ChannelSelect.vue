@@ -4,6 +4,9 @@ import { ref } from 'vue'
 defineProps({
   modelValue: {
     type: [Number, String]
+  },
+  width: {
+    type: String
   }
 })
 const emit = defineEmits(['update:modelValue'])
@@ -17,7 +20,7 @@ getChannelList()
 </script>
 <template>
   <el-select
-    style="width: 240px"
+    :style="{ width }"
     :modelValue="modelValue"
     @update:modelValue="emit('update:modelValue', $event)"
   >
