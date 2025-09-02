@@ -51,6 +51,10 @@ pnpm install
 
 Compile and Hot-Reload for Development
 pnpm dev
+```
+## License
 
+本项目仅供学习和练习使用。
 Type-Check, Compile and Minify for Production
 pnpm build
+··
