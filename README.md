@@ -46,11 +46,16 @@ In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=
 ## ⚡ Project Setup
 
 ### Install dependencies
-```sh
+```
 pnpm install
-
+```
 Compile and Hot-Reload for Development
+```
 pnpm dev
+```
+Type-Check, Compile and Minify for Production
+```
+pnpm build
 ```
 ## License
 
